@@ -3,8 +3,8 @@
 # It would have been impossible to create this without the following post on Stack Exchange!!!
 # https://unix.stackexchange.com/a/55622
 
-_have {executable_name} &&
-__chroot_helper_{current_date}(){
+type "{executable_name}" &> /dev/null &&
+__chroot_helper_cli_{current_date}(){
     local cur prev cmd
     COMPREPLY=()
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -12,7 +12,7 @@ __chroot_helper_{current_date}(){
 
     # Completion of commands and "first level options.
     if [[ $COMP_CWORD == 1 ]]; then
-        COMPREPLY=( $(compgen -W "generate -h --help --version" -- "${cur}") )
+        COMPREPLY=( $(compgen -W "generate -h --help --manual --version" -- "${cur}") )
         return 0
     fi
 
@@ -25,4 +25,4 @@ __chroot_helper_{current_date}(){
         ;;
     esac
 } &&
-complete -F __chroot_helper_{current_date} {executable_name}
+complete -F __chroot_helper_cli_{current_date} {executable_name}
